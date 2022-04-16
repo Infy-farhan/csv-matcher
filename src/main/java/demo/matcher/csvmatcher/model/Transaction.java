@@ -13,6 +13,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+/**
+ * Java Object represnting a row in the CSV file
+ */
 public class Transaction {
 	@CsvBindByName(column = "GSTIN")
 	private String gstin;

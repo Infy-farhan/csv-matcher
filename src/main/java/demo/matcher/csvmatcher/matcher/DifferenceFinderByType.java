@@ -8,6 +8,10 @@ import lombok.Builder;
 import lombok.NonNull;
 
 @Builder
+/**
+ * A Difference finder which calculates the difference score of two Transactions by calculating the individual differences of each field whose difference in turn is calculated by algorithm based on their data type.
+ * The algorithms are represented by the BiFunctions stringDifferenceCalculator, numberDifferenceCalculator and localDateDifferenceCalculator.
+ */
 public class DifferenceFinderByType implements DifferenceFinder{
     @NonNull
     private BiFunction<String, String, Float> stringDifferenceCalculator;
@@ -16,6 +20,15 @@ public class DifferenceFinderByType implements DifferenceFinder{
     @NonNull
     private BiFunction<LocalDate, LocalDate, Float> localDateDifferenceCalculator; 
 
+    /**
+     * {@inheritDoc}
+     * This method follows type based approach to calculate the difference score.
+     * For all the Number fields it uses the numberDiffernceCalculator BiFunction
+     * For all the String fields it uses the stringDiffernceCalculator BiFunction
+     * For all the LocalDate fields it uses the localDateDiffernceCalculator BiFunction
+     * Then it just adds up all the individual field differnce scores to find the difference score of the objects.
+     * If any of the field difference is less than 0 (interpreted as no match) it returns -1 (meaning no match).
+     */
     @Override
     public Float getDifferenceScore(Transaction t1, Transaction t2) {
         float gstinDif = stringDifferenceCalculator.apply(t1.getGstin(), t2.getGstin());

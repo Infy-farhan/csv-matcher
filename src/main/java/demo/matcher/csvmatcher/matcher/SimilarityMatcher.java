@@ -12,6 +12,10 @@ public class SimilarityMatcher implements Matcher{
         this.differenceFinder = differenceFinder;
     }
     
+    /**
+     * {@inheritDoc}
+     * 
+     */
     @Override
     public List<Match> compare(List<Transaction> buyers, List<Transaction> suppliers) {
         List<Match> matchList = new ArrayList<>();

@@ -6,6 +6,10 @@ import com.opencsv.bean.AbstractBeanField;
 import com.opencsv.exceptions.CsvConstraintViolationException;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 
+/**
+ * A custom converter used to convert a String value to a LocalDate object.
+ * Used to populate the Date column of the csv into the date field of the Transaction object
+ */
 public class CustomDateConvertor extends AbstractBeanField<LocalDate, Object>{
 
 	@Override

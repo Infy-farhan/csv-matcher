@@ -2,8 +2,21 @@ package demo.matcher.csvmatcher.similaritycalculator;
 
 import java.util.function.BiFunction;
 
+/**
+ * Simple String Similarity Calculator
+ */
 public class StringSimilarityCalculator implements BiFunction<String, String, Float>{
 
+    /**
+     * Return the difference score of two String
+     * The difference score is the number of insertions required to reach one string from another
+     * If one string cannot be created from the other string just by insertions, it returns -1 meaning they do not match.
+     * The method is based on the fact that the Largest Common Subsequence of two similar strings (as per the definition given earlier)
+     * will be same (same lenght) as the smaller string of the two.
+     * @param str1
+     * @param str2
+     * @return difference score of the two strings 
+     */
     @Override
     public Float apply(String str1, String str2) {
         if(str1==null) str1 = "";

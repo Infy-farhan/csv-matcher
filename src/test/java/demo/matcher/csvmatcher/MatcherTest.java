@@ -1,5 +1,6 @@
 package demo.matcher.csvmatcher;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ import demo.matcher.csvmatcher.similaritycalculator.StringSimilarityCalculator;
 @SpringBootTest
 public class MatcherTest {
     @Test
-    public void matcherTest(){
+    public void matcherTest() throws FileNotFoundException{
         String csvPathSupplier = "D:\\mdfarhan.khan\\workspace\\SE2 ID360 Craft\\SE2 Craft\\Supplier.csv";
 		List<Transaction> suppliers = CsvFileUtil.readCsv(csvPathSupplier);
         String csvPathBuyer = "D:\\mdfarhan.khan\\workspace\\SE2 ID360 Craft\\SE2 Craft\\Buyer.csv";
@@ -28,7 +29,7 @@ public class MatcherTest {
                                             .localDateDifferenceCalculator(new DateSimilarityCalculator(2))
                                             .numberDifferenceCalculator(new NumberSimilarityCalculator(2f))
                                             .stringDifferenceCalculator(new StringSimilarityCalculator())
-                                            .build();  
+                                            .build();
         Matcher matcher = new SimilarityMatcher(differenceFinder);
         List<Match> matchList = matcher.compare(buyers, suppliers);
         matchList.forEach(System.out::println);

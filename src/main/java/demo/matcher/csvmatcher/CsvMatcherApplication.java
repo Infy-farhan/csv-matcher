@@ -27,6 +27,11 @@ public class CsvMatcherApplication implements CommandLineRunner {
 		SpringApplication.run(CsvMatcherApplication.class, args);
 	}
 
+	/**
+	 * This method starts the execution of the matcher application.
+	 * It takes input form the user and creates the matcher object based on the inputs.
+	 * Then runs the matching algorithm and writes the result in an output file.
+	 */
 	@Override
 	public void run(String... args) throws Exception{
 		Scanner in = new Scanner(System.in);
