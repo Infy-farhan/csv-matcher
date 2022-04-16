@@ -1,5 +1,7 @@
 package demo.matcher.csvmatcher;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,7 +28,7 @@ public class CsvMatcherApplication implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) throws Exception{
 		Scanner in = new Scanner(System.in);
 		System.out.print("Enter buyer.csv path: ");
 		String buyerPath = in.nextLine();
@@ -49,8 +51,20 @@ public class CsvMatcherApplication implements CommandLineRunner {
 			}
 		}
 		in.close();
-		List<Transaction> suppliers = CsvFileUtil.readCsv(supplierPath);
-		List<Transaction> buyers = CsvFileUtil.readCsv(buyerPath);
+		List<Transaction> suppliers;
+		try {
+			suppliers = CsvFileUtil.readCsv(supplierPath);
+		} catch (FileNotFoundException e) {
+			System.err.println("Wrong path for Suppliers. File not found");
+			return;
+		}
+		List<Transaction> buyers;
+		try {
+			buyers = CsvFileUtil.readCsv(buyerPath);
+		} catch (FileNotFoundException e) {
+			System.err.println("Wrong path for Buyers. File not found");
+			return;
+		}
 		DifferenceFinder differenceFinder = DifferenceFinderByType.builder()
 				.localDateDifferenceCalculator(new DateSimilarityCalculator(dateThreshold))
 				.numberDifferenceCalculator(new NumberSimilarityCalculator(numberThreshold))
@@ -59,7 +73,11 @@ public class CsvMatcherApplication implements CommandLineRunner {
 		Matcher matcher = new SimilarityMatcher(differenceFinder);
 		List<Match> matchList = matcher.compare(buyers, suppliers);
 		System.out.println(matchList);
-		CsvFileUtil.writeCsv(resultPath, matchList);
+		try {
+			CsvFileUtil.writeCsv(resultPath, matchList);
+		} catch (IOException e) {
+			System.err.println("Could not write to the provided output file." + e.getMessage());
+		}
 	}
 
 }

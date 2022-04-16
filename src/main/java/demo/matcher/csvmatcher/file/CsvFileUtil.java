@@ -17,30 +17,20 @@ import demo.matcher.csvmatcher.model.Transaction;
 
 public class CsvFileUtil {
 
-    public static List<Transaction> readCsv(String path){
-    	List<Transaction> transactions = null;;
-        try {
-			transactions = new CsvToBeanBuilder<Transaction>(new FileReader(path))
-													.withSeparator(',')
-													.withType(Transaction.class)
-													.build()
-													.parse();
-			
-		} catch (IllegalStateException | FileNotFoundException e) {
-			e.printStackTrace();
-		}
-        return transactions;
-    }
+	public static List<Transaction> readCsv(String path) throws FileNotFoundException {
+		List<Transaction> transactions = new CsvToBeanBuilder<Transaction>(new FileReader(path))
+				.withSeparator(',')
+				.withType(Transaction.class)
+				.build()
+				.parse();
+		return transactions;
+	}
 
-	public static void writeCsv(String path, List<Match> matches){
-		try {
-			StatefulBeanToCsv<Match> beanWriter = new StatefulBeanToCsvBuilder<Match>(new FileWriter(path))
-											.withSeparator(',')
-											.build();
-			beanWriter.write(matches);
-		} catch (CsvDataTypeMismatchException | CsvRequiredFieldEmptyException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public static void writeCsv(String path, List<Match> matches)
+			throws CsvDataTypeMismatchException, CsvRequiredFieldEmptyException, IOException {
+		StatefulBeanToCsv<Match> beanWriter = new StatefulBeanToCsvBuilder<Match>(new FileWriter(path))
+				.withSeparator(',')
+				.build();
+		beanWriter.write(matches);
 	}
 }
