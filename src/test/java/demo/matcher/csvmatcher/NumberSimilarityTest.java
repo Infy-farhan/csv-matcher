@@ -2,11 +2,9 @@ package demo.matcher.csvmatcher;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import demo.matcher.csvmatcher.similaritycalculator.NumberSimilarityCalculator;
 
-@SpringBootTest
 public class NumberSimilarityTest {
     @Test
     public void testForOverThresholdDiff(){

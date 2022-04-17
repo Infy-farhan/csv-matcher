@@ -19,7 +19,6 @@ public class SimilarityMatcher implements Matcher{
     @Override
     public List<Match> compare(List<Transaction> buyers, List<Transaction> suppliers) {
         List<Match> matchList = new ArrayList<>();
-        List<Transaction> matchedSellers = new ArrayList<>();
         for(Transaction buyer: buyers){
             float minDifferenceScore = Float.MAX_VALUE;
             Transaction mostSimilar = null;
@@ -43,15 +42,13 @@ public class SimilarityMatcher implements Matcher{
             }else{
                 match.setSupplier(mostSimilar);
                 match.setMatchType(minDifferenceScore==0? MatchType.EXACT : MatchType.PARTIAL);
-                matchedSellers.add(mostSimilar);
+                suppliers.remove(mostSimilar);
             }
             matchList.add(match);
         }
-        List<Transaction> unmatchedSellers = new ArrayList<>(suppliers);
-        unmatchedSellers.removeAll(matchedSellers);
-        for(Transaction seller: unmatchedSellers){
+        for(Transaction supplier: suppliers){
             Match match = new Match();
-            match.setSupplier(seller);
+            match.setSupplier(supplier);
             match.setMatchType(MatchType.NO_MATCH);
             matchList.add(match);
         }

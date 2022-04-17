@@ -1,5 +1,8 @@
 package demo.matcher.csvmatcher.matcher;
 
+import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvRecurse;
+
 import demo.matcher.csvmatcher.model.Transaction;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +17,9 @@ import lombok.ToString;
  * Both EXACT and PARTIAL match has buyes and supplier, NO_MATCH has either buyer or supplier.
  */
 public class Match {
+    @CsvRecurse
     private Transaction buyer;
-    private Transaction supplier;
+    @CsvBindByName(column = "MatchType")
     private MatchType matchType;
+    private Transaction supplier;
 }

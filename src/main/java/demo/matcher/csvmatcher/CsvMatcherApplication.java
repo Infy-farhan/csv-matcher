@@ -77,11 +77,11 @@ public class CsvMatcherApplication implements CommandLineRunner {
 				.build();
 		Matcher matcher = new SimilarityMatcher(differenceFinder);
 		List<Match> matchList = matcher.compare(buyers, suppliers);
-		System.out.println(matchList);
+		//System.out.println(matchList);
 		try {
 			CsvFileUtil.writeCsv(resultPath, matchList);
 		} catch (IOException e) {
-			System.err.println("Could not write to the provided output file." + e.getMessage());
+			System.out.println("Could not write to the provided output file." + e.getMessage());
 		}
 	}
 
