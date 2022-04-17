@@ -21,13 +21,15 @@ public class MinAggregateScoreMatcher implements IMatcher {
 
     private final IDifferenceScorer transactionDifferenceScorer;
 
-    public MinAggregateScoreMatcher(@Qualifier(Constant.TRANSACTION_SCORER) IDifferenceScorer transactionDifferenceScorer) {
+    public MinAggregateScoreMatcher(
+            @Qualifier(Constant.TRANSACTION_SCORER) IDifferenceScorer transactionDifferenceScorer) {
         this.transactionDifferenceScorer = transactionDifferenceScorer;
     }
 
     /**
      * {@inheritDoc}
-     * Compares the lists by matching each buyer Transaction with all the suppliers Transactiona nd finding the closest match for it.
+     * Compares the lists by matching each buyer Transaction with all the suppliers
+     * Transactiona nd finding the closest match for it.
      */
     @Override
     public List<Match> match(InputData inputData, List<Transaction> buyers, List<Transaction> suppliers) {
@@ -38,14 +40,17 @@ public class MinAggregateScoreMatcher implements IMatcher {
         Set<Integer> matchedSupplierIndices = new HashSet<>();
 
         for (MatchPair pair : matchPairSet) {
-            if (matchedBuyerIndices.contains(pair.getBuyerIndex()) || matchedSupplierIndices.contains(pair.getSupplierIndex())) {
+            if (matchedBuyerIndices.contains(pair.getBuyerIndex())
+                    || matchedSupplierIndices.contains(pair.getSupplierIndex()) || pair.getDifferenceScore() > 1) {
                 continue;
             }
             if (pair.getDifferenceScore() == 0.0) {
-                Match match = new Match(buyers.get(pair.getBuyerIndex()), MatchType.EXACT, suppliers.get(pair.getSupplierIndex()));
+                Match match = new Match(buyers.get(pair.getBuyerIndex()), MatchType.EXACT,
+                        suppliers.get(pair.getSupplierIndex()));
                 matchList.add(match);
             } else if (pair.getDifferenceScore() <= 1) {
-                Match match = new Match(buyers.get(pair.getBuyerIndex()), MatchType.PARTIAL, suppliers.get(pair.getSupplierIndex()));
+                Match match = new Match(buyers.get(pair.getBuyerIndex()), MatchType.PARTIAL,
+                        suppliers.get(pair.getSupplierIndex()));
                 matchList.add(match);
             }
             matchedBuyerIndices.add(pair.getBuyerIndex());
@@ -66,11 +71,13 @@ public class MinAggregateScoreMatcher implements IMatcher {
         return matchList;
     }
 
-    private Set<MatchPair> generateSortedMatchPairSet(InputData inputData, List<Transaction> buyers, List<Transaction> suppliers) {
+    private Set<MatchPair> generateSortedMatchPairSet(InputData inputData, List<Transaction> buyers,
+            List<Transaction> suppliers) {
         Set<MatchPair> treeSet = new TreeSet<>();
         for (int buyerIndex = 0; buyerIndex < buyers.size(); buyerIndex++) {
             for (int supplierIndex = 0; supplierIndex < suppliers.size(); supplierIndex++) {
-                double score = transactionDifferenceScorer.getScore(inputData, buyers.get(buyerIndex), suppliers.get(supplierIndex));
+                double score = transactionDifferenceScorer.getScore(inputData, buyers.get(buyerIndex),
+                        suppliers.get(supplierIndex));
                 treeSet.add(new MatchPair(buyerIndex, supplierIndex, score));
             }
         }
@@ -95,7 +102,8 @@ public class MinAggregateScoreMatcher implements IMatcher {
             int scoreCompare = Double.compare(this.getDifferenceScore(), matchPair.getDifferenceScore());
             if (scoreCompare == 0) {
                 int buyerCompare = Integer.compare(this.getBuyerIndex(), matchPair.getBuyerIndex());
-                if (buyerCompare == 0) return Integer.compare(this.getSupplierIndex(), matchPair.getSupplierIndex());
+                if (buyerCompare == 0)
+                    return Integer.compare(this.getSupplierIndex(), matchPair.getSupplierIndex());
                 return buyerCompare;
             }
             return scoreCompare;
@@ -105,7 +113,8 @@ public class MinAggregateScoreMatcher implements IMatcher {
         public boolean equals(Object object) {
             if (object instanceof MatchPair) {
                 MatchPair other = (MatchPair) object;
-                return this.getBuyerIndex() == other.getBuyerIndex() && this.getSupplierIndex() == this.getSupplierIndex();
+                return this.getBuyerIndex() == other.getBuyerIndex()
+                        && this.getSupplierIndex() == this.getSupplierIndex();
             }
             return false;
         }

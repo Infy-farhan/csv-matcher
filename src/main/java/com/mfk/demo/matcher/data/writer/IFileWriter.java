@@ -9,5 +9,5 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
 public interface IFileWriter {
     public void write(String path, List<Match> matches)
-            throws CsvDataTypeMismatchException, CsvRequiredFieldEmptyException, IOException;
+            throws Exception;
 }
