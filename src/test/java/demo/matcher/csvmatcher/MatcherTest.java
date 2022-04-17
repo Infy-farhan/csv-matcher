@@ -3,6 +3,7 @@ package demo.matcher.csvmatcher;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import demo.matcher.csvmatcher.file.CsvFileUtil;
@@ -31,5 +32,6 @@ public class MatcherTest {
         Matcher matcher = new SimilarityMatcher(differenceFinder);
         List<Match> matchList = matcher.compare(buyers, suppliers);
         matchList.forEach(System.out::println);
+        Assertions.assertEquals(8, matchList.size());
     }
 }

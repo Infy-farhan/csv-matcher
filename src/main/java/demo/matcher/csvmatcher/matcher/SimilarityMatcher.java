@@ -53,6 +53,7 @@ public class SimilarityMatcher implements Matcher{
             Match match = new Match();
             match.setSupplier(seller);
             match.setMatchType(MatchType.NO_MATCH);
+            matchList.add(match);
         }
         return matchList;
     }
