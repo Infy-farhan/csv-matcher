@@ -3,6 +3,12 @@ package com.mfk.demo.matcher.model;
 import lombok.Getter;
 
 @Getter
+/**
+ * Class to hold threshold value for each data type.
+ *
+ * It stores separate threshold for string, date and
+ * number data type.
+ */
 public class Threshold {
 
     private final long stringThreshold;

@@ -6,7 +6,8 @@ import com.mfk.demo.matcher.model.Threshold;
 import org.springframework.stereotype.Component;
 
 /**
- * Simple Number Similarity Calculator based on the absolute difference
+ * Class provides concrete algorithm for calculating difference
+ * score of two Double objects.
  */
 @Component(Constant.NUMBER_SCORER)
 public class NumberDifferenceScorer implements IDifferenceScorer<Double> {

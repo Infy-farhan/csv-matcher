@@ -7,6 +7,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+/**
+ * Class to read input data from command line. This provides
+ * feature to let use interact in command line prompt to pass
+ * input data to application.
+ */
 @Component
 public class CommandLineInputHandler implements IInputHandler {
 
