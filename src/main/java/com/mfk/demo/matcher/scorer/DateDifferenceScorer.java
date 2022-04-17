@@ -1,5 +1,7 @@
 package com.mfk.demo.matcher.scorer;
 
+import com.mfk.demo.matcher.constant.Constant;
+import com.mfk.demo.matcher.input.InputData;
 import com.mfk.demo.matcher.model.Threshold;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +11,7 @@ import java.time.temporal.ChronoUnit;
 /**
  * Simple Date Similarity Calculator based on the difference in number of days
  */
-@Component
+@Component(Constant.DATE_SCORER)
 public class DateDifferenceScorer implements IDifferenceScorer<LocalDate> {
 
     /**
@@ -21,17 +23,17 @@ public class DateDifferenceScorer implements IDifferenceScorer<LocalDate> {
      * @return The difference score of the two localdate
      */
     @Override
-    public Double getScore(Threshold threshold, LocalDate source, LocalDate destination) {
+    public Double getScore(InputData inputData, LocalDate source, LocalDate destination) {
         if (source == null && destination == null) {
             return 0.0;
         }
         if (source == null || destination == null) {
-            return 10.0;
+            return inputData.getNoOfColumns() + 1.0;
         }
         long difference = Math.abs(ChronoUnit.DAYS.between(source, destination));
-        if (difference > threshold.getDateThreshold()){
-            return 10.0;
+        if (difference > inputData.getThreshold().getDateThreshold()){
+            return inputData.getNoOfColumns() + 1.0;
         }
-        return difference/ (double)threshold.getDateThreshold();
+        return difference/ (double)inputData.getThreshold().getDateThreshold();
     }
 }

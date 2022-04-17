@@ -14,14 +14,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.List;
 
 @SpringBootApplication
-public class CsvMatcherApplication implements CommandLineRunner {
+public class MatcherApplication implements CommandLineRunner {
 
     private final IInputHandler inputScanner;
     private final IFileReader fileReader;
     private final IFileWriter fileWriter;
     private final IMatcher matcher;
 
-    public CsvMatcherApplication(IInputHandler inputScanner, IFileReader fileReader, IFileWriter fileWriter, IMatcher matcher) {
+    public MatcherApplication(IInputHandler inputScanner,
+                              IFileReader fileReader,
+                              IFileWriter fileWriter,
+                              IMatcher matcher) {
         this.fileReader = fileReader;
         this.fileWriter = fileWriter;
         this.inputScanner = inputScanner;
@@ -29,7 +32,7 @@ public class CsvMatcherApplication implements CommandLineRunner {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(CsvMatcherApplication.class, args);
+        SpringApplication.run(MatcherApplication.class, args);
     }
 
     /**
@@ -45,7 +48,7 @@ public class CsvMatcherApplication implements CommandLineRunner {
         List<Transaction> buyers = fileReader.read(inputData.getBuyerPath());
         List<Transaction> suppliers = fileReader.read(inputData.getSupplierPath());
 
-        List<Match> matchList = matcher.match(inputData.getThreshold(),buyers, suppliers);
+        List<Match> matchList = matcher.match(inputData,buyers, suppliers);
 
         fileWriter.write(inputData.getResultPath(), matchList);
     }
