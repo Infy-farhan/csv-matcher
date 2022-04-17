@@ -1,6 +1,5 @@
 package com.mfk.demo.matcher.data.reader;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 import com.mfk.demo.matcher.model.Transaction;

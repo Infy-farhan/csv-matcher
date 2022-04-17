@@ -43,14 +43,21 @@ public class SimilarityMatcher implements IMatcher {
             }else if(pair.getDifferenceScore()<=1){
                 Match match = new Match(buyers.get(pair.getBuyerIndex()), MatchType.PARTIAL, suppliers.get(pair.getSupplierIndex()));
                 matchList.add(match);
-            }else{
-                Match noMatch1 = new Match(buyers.get(pair.getBuyerIndex()), MatchType.NO_MATCH, null);
-                Match noMatch2 = new Match(null, MatchType.NO_MATCH, suppliers.get(pair.getSupplierIndex()));
-                matchList.add(noMatch1);
-                matchList.add(noMatch2);
             }
             matchedBuyerIndices.add(pair.getBuyerIndex());
             matechedSupplierIndices.add(pair.getSupplierIndex());
+        }
+        for(int i=0; i<buyers.size(); i++){
+            if(!matchedBuyerIndices.contains(i)){
+                Match onlyInSeller = new Match(buyers.get(i), MatchType.NO_MATCH, null);
+                matchList.add(onlyInSeller);
+            }
+        }
+        for(int i=0; i<suppliers.size(); i++){
+            if(!matechedSupplierIndices.contains(i)){
+                Match onlyInSeller = new Match(null, MatchType.NO_MATCH, suppliers.get(i));
+                matchList.add(onlyInSeller);
+            }
         }
         return matchList;
     }
