@@ -26,11 +26,11 @@ public class DateDifferenceScorer implements IDifferenceScorer<LocalDate> {
             return 0.0;
         }
         if (source == null || destination == null) {
-            return -1.0;
+            return 10.0;
         }
         long difference = Math.abs(ChronoUnit.DAYS.between(source, destination));
         if (difference > threshold.getDateThreshold()){
-            return -1.0;
+            return 10.0;
         }
         return difference/ (double)threshold.getDateThreshold();
     }

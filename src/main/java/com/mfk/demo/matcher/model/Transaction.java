@@ -27,25 +27,26 @@ public class Transaction {
 	private String billNo;
 
 	@CsvBindByName(column = "GST rate(%)")
-	private Float gstRate;
+	private Double gstRate;
 
 	@CsvBindByName(column = "Taxable value")
 	@CsvNumber("##,###.##")
-	private Float taxableValue;
+	private Double taxableValue;
 
 	@CsvBindByName(column = "IGST")
 	@CsvNumber("##,###.##")
-	private Float igst;
+	private Double igst;
 
 	@CsvBindByName(column = "CGST")
 	@CsvNumber("##,###.##")
-	private Float cgst;
+	private Double cgst;
 
 	@CsvBindByName(column = "SGST")
 	@CsvNumber("##,###.##")
-	private Float sgst;
+	private Double sgst;
 	
 	@CsvBindByName(column = "Total")
 	@CsvNumber("##,###.##")
-	private Float total;
+	private Double total;
+
 }

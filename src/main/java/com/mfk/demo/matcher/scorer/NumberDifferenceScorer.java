@@ -27,7 +27,7 @@ public class NumberDifferenceScorer implements IDifferenceScorer<Double> {
         }
         double difference = Math.abs(source - destination);
         if (difference > threshold.getNumberThreshold()) {
-            return -1.0;
+            return 10.0;
         }
         return difference/threshold.getNumberThreshold();
     }

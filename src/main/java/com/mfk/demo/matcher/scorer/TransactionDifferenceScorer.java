@@ -37,8 +37,18 @@ public class TransactionDifferenceScorer implements IDifferenceScorer<Transactio
      * If any of the field difference is less than 0 (interpreted as no match) it returns -1 (meaning no match).
      */
     @Override
-    public Double getScore(Threshold threshold, Transaction t1, Transaction t2) {
-        return 0.0;
+    public Double getScore(Threshold threshold, Transaction source, Transaction destination) {
+        double aggregateScore = 
+            stringDifferenceScorer.getScore(threshold, source.getGstin(), destination.getGstin())
+            + dateDifferenceScorer.getScore(threshold, source.getDate(), destination.getDate())
+            + stringDifferenceScorer.getScore(threshold, source.getBillNo(), destination.getBillNo())
+            + numberDifferenceScorer.getScore(threshold, source.getGstRate(), destination.getGstRate())
+            + numberDifferenceScorer.getScore(threshold, source.getTaxableValue(), destination.getTaxableValue())
+            + numberDifferenceScorer.getScore(threshold, source.getIgst(), destination.getIgst())
+            + numberDifferenceScorer.getScore(threshold, source.getCgst(), destination.getCgst())
+            + numberDifferenceScorer.getScore(threshold, source.getSgst(), destination.getSgst())
+            + numberDifferenceScorer.getScore(threshold, source.getTotal(), destination.getTotal());
+        return aggregateScore/9;
     }
 
 }

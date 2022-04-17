@@ -23,7 +23,7 @@ public class StringDifferenceScorer implements IDifferenceScorer<String> {
     @Override
     public Double getScore(Threshold threshold, String source, String destination) {
         int diff = editDistance(source, destination);
-        return diff>threshold.getStringThreshold()? -1.0 : diff;
+        return diff>threshold.getStringThreshold()? 10.0 : (double)diff/threshold.getStringThreshold();
     }
 
     private int editDistance(String source, String destination) {
