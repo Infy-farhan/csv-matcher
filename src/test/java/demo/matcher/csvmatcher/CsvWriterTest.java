@@ -10,24 +10,24 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
 import org.junit.jupiter.api.Test;
 
-import demo.matcher.csvmatcher.file.CsvFileUtil;
+import demo.matcher.csvmatcher.io.CsvFileReader;
 import demo.matcher.csvmatcher.matcher.Match;
 import demo.matcher.csvmatcher.matcher.MatchType;
 import demo.matcher.csvmatcher.model.Transaction;
 
 public class CsvWriterTest {
-    @Test
-    public void writerTest() throws CsvDataTypeMismatchException, CsvRequiredFieldEmptyException, IOException {
-        Transaction t1 = getT1();
-        Transaction t2 = getT1();
-        Match match = new Match();
-        match.setBuyer(t1);
-        match.setSupplier(t2);
-        match.setMatchType(MatchType.EXACT);
-        List<Match> list = new ArrayList<>();
-        list.add(match);
-        CsvFileUtil.writeCsv("D:\\mdfarhan.khan\\workspace\\SE2 ID360 Craft\\SE2 Craft\\TestResults.csv", list);
-    }
+    // @Test
+    // public void writerTest() throws CsvDataTypeMismatchException, CsvRequiredFieldEmptyException, IOException {
+    //     Transaction t1 = getT1();
+    //     Transaction t2 = getT1();
+    //     Match match = new Match();
+    //     match.setBuyer(t1);
+    //     match.setSupplier(t2);
+    //     match.setMatchType(MatchType.EXACT);
+    //     List<Match> list = new ArrayList<>();
+    //     list.add(match);
+    //     CsvFileReader.writeCsv("D:\\mdfarhan.khan\\workspace\\SE2 ID360 Craft\\SE2 Craft\\TestResults.csv", list);
+    // }
 
     // @Test
     // public void writerTestString() throws CsvDataTypeMismatchException, CsvRequiredFieldEmptyException, IOException {

@@ -1,15 +1,16 @@
 package demo.matcher.csvmatcher;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
-import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import demo.matcher.csvmatcher.file.CsvFileUtil;
+import demo.matcher.csvmatcher.io.IFileReader;
+import demo.matcher.csvmatcher.io.IFileWriter;
+import demo.matcher.csvmatcher.io.IInputScanner;
+import demo.matcher.csvmatcher.io.InputData;
 import demo.matcher.csvmatcher.matcher.DifferenceFinder;
 import demo.matcher.csvmatcher.matcher.DifferenceFinderByType;
 import demo.matcher.csvmatcher.matcher.Match;
@@ -22,7 +23,12 @@ import demo.matcher.csvmatcher.similaritycalculator.StringSimilarityCalculator;
 
 @SpringBootApplication
 public class CsvMatcherApplication implements CommandLineRunner {
-
+	@Autowired
+	IInputScanner inputScanner;
+	@Autowired
+	IFileReader fileReader;
+	@Autowired
+	IFileWriter fileWriter;
 	public static void main(String[] args) {
 		SpringApplication.run(CsvMatcherApplication.class, args);
 	}
@@ -34,55 +40,17 @@ public class CsvMatcherApplication implements CommandLineRunner {
 	 */
 	@Override
 	public void run(String... args) throws Exception{
-		Scanner in = new Scanner(System.in);
-		System.out.print("Enter buyer.csv path: ");
-		String buyerPath = in.nextLine();
-		System.out.print("Enter supplier.csv path: ");
-		String supplierPath = in.nextLine();
-		System.out.print("Enter output result path: ");
-		String resultPath = in.nextLine();
-		float numberThreshold;
-		int dateThreshold;
-		while(true){
-			System.out.println(
-				"Input individual space separated thresholds for number(float) and date (int in days)");
-			String[] thresholds = in.nextLine().split(" ");
-			if(thresholds.length==2){
-				numberThreshold = Float.parseFloat(thresholds[0]);
-				dateThreshold = Integer.parseInt(thresholds[1]);
-				break;
-			}else{
-				System.err.println("Wrong number of inputs. Please input three space separated values");
-			}
-		}
-		in.close();
-		List<Transaction> suppliers;
-		try {
-			suppliers = CsvFileUtil.readCsv(supplierPath);
-		} catch (FileNotFoundException e) {
-			System.err.println("Wrong path for Suppliers. File not found");
-			return;
-		}
-		List<Transaction> buyers;
-		try {
-			buyers = CsvFileUtil.readCsv(buyerPath);
-		} catch (FileNotFoundException e) {
-			System.err.println("Wrong path for Buyers. File not found");
-			return;
-		}
+		InputData inputData = inputScanner.getInputs();
+		List<Transaction> buyers = fileReader.read(inputData.getBuyerPath());
+		List<Transaction> suppliers = fileReader.read(inputData.getSupplierPath());
 		DifferenceFinder differenceFinder = DifferenceFinderByType.builder()
-				.localDateDifferenceCalculator(new DateSimilarityCalculator(dateThreshold))
-				.numberDifferenceCalculator(new NumberSimilarityCalculator(numberThreshold))
-				.stringDifferenceCalculator(new StringSimilarityCalculator())
+				.localDateDifferenceCalculator(new DateSimilarityCalculator(inputData.getDateThreshold()))
+				.numberDifferenceCalculator(new NumberSimilarityCalculator(inputData.getNumberThreshold()))
+				.stringDifferenceCalculator(new StringSimilarityCalculator(inputData.getStringThreshold()))
 				.build();
 		Matcher matcher = new SimilarityMatcher(differenceFinder);
 		List<Match> matchList = matcher.compare(buyers, suppliers);
-		//System.out.println(matchList);
-		try {
-			CsvFileUtil.writeCsv(resultPath, matchList);
-		} catch (IOException e) {
-			System.out.println("Could not write to the provided output file." + e.getMessage());
-		}
+		fileWriter.write(inputData.getResultPath(), matchList);
 	}
 
 }

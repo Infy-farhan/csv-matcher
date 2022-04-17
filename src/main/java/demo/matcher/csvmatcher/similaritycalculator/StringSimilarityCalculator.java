@@ -6,7 +6,10 @@ import java.util.function.BiFunction;
  * Simple String Similarity Calculator based on subsequence check
  */
 public class StringSimilarityCalculator implements BiFunction<String, String, Float>{
-
+    int threshold;
+    public StringSimilarityCalculator(int threshold){
+        this.threshold = threshold;
+    }
     /**
      * Return the difference score of two String
      * The difference score is the number of insertions required to reach one string from another
@@ -31,7 +34,11 @@ public class StringSimilarityCalculator implements BiFunction<String, String, Fl
         for (int i = 0; i < large.length() && j < small.length(); i++){
             if (small.charAt(j) == large.charAt(i)) j++;
         }
-        return j==small.length()? large.length()-j : -1f;
+        if(j==small.length()){
+            float diff = large.length() - j;
+            return diff>threshold? -1f: diff;
+        }
+        return -1f;
     }
     
 }
