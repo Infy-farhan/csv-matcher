@@ -14,7 +14,7 @@ public class SimilarityMatcher implements Matcher{
     
     /**
      * {@inheritDoc}
-     * 
+     * Compares the lists by matching each buyer Transaction with all the suppliers Transactiona nd finding the closest match for it.
      */
     @Override
     public List<Match> compare(List<Transaction> buyers, List<Transaction> suppliers) {

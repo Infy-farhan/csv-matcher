@@ -4,11 +4,9 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import demo.matcher.csvmatcher.similaritycalculator.DateSimilarityCalculator;
 
-@SpringBootTest
 public class DateSimilarityTest {
     @Test
     public void testForOverThresholdDiff(){

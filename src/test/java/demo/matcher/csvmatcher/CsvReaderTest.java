@@ -6,12 +6,10 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import demo.matcher.csvmatcher.file.CsvFileUtil;
 import demo.matcher.csvmatcher.model.Transaction;
 
-@SpringBootTest
 public class CsvReaderTest {
 	
 	@Test

@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import demo.matcher.csvmatcher.file.CsvFileUtil;
 import demo.matcher.csvmatcher.matcher.DifferenceFinder;
@@ -17,7 +16,6 @@ import demo.matcher.csvmatcher.similaritycalculator.DateSimilarityCalculator;
 import demo.matcher.csvmatcher.similaritycalculator.NumberSimilarityCalculator;
 import demo.matcher.csvmatcher.similaritycalculator.StringSimilarityCalculator;
 
-@SpringBootTest
 public class MatcherTest {
     @Test
     public void matcherTest() throws FileNotFoundException{

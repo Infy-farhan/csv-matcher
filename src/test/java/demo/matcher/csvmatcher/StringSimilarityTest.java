@@ -6,33 +6,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import demo.matcher.csvmatcher.similaritycalculator.StringSimilarityCalculator;
 
-@SpringBootTest
 public class StringSimilarityTest {
     @Test
-    public void testForOverThresholdDiff(){
+    public void testForNoMatch(){
         StringSimilarityCalculator calculator = new StringSimilarityCalculator();
         float dif = calculator.apply("Rams", "Raama");
         Assertions.assertEquals(-1f, dif);
     }
 
     @Test
-    public void testForDiffOneDayUnderThreshold(){
-        StringSimilarityCalculator calculator = new StringSimilarityCalculator();
-        float dif = calculator.apply("Rams", "Raama");
-        Assertions.assertEquals(3, dif);
-    }
-
-    @Test
-    public void testForDiffOneDayExactThreshold(){
+    public void testForDiff(){
         StringSimilarityCalculator calculator = new StringSimilarityCalculator();
         float dif = calculator.apply("Ram", "Raama");
-        Assertions.assertEquals(-1f, dif);
-    }
-
-    @Test
-    public void testForNoDiffExactThreshold(){
-        StringSimilarityCalculator calculator = new StringSimilarityCalculator();
-        float dif = calculator.apply("Ram", "Ram");
-        Assertions.assertEquals(0.0f, dif);
+        Assertions.assertEquals(2, dif);
     }
 }
