@@ -4,9 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,19 +96,4 @@ public class CsvFileUtil {
 		return t.toString();
 	}
 
-	public static String writeCsvToString(List<Match> matches) throws CsvDataTypeMismatchException, CsvRequiredFieldEmptyException, IOException {
-		Writer strWriter = new StringWriter();
-		CSVWriter writer = new CSVWriter(strWriter);
-		String[] columnHeaders = new String[] { "GSTIN", "Date", "Bill no", "GST rate(%)", "Taxable value", "IGST",
-				"CGST", "SGST", "Total", "MatchType", "GSTIN", "Date", "Bill no", "GST rate(%)", "Taxable value",
-				"IGST", "CGST", "SGST", "Total" };
-		List<String[]> content = new ArrayList<>();
-		content.add(columnHeaders);
-		for (Match match : matches) {
-			String[] row = matchToStringArray(match);
-			content.add(row);
-		}
-		writer.writeAll(content);
-		return strWriter.toString();
-	}
 }
