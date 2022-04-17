@@ -1,8 +1,13 @@
 package com.mfk.demo.matcher.scorer;
 
+import com.mfk.demo.matcher.constant.Constant;
+import com.mfk.demo.matcher.input.InputData;
 import com.mfk.demo.matcher.model.Threshold;
 import com.mfk.demo.matcher.model.Transaction;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * A Difference finder which calculates the difference score of two Transactions by
@@ -11,21 +16,20 @@ import org.springframework.stereotype.Component;
  * The algorithms are represented by the BiFunctions stringDifferenceScorer,
  * numberDifferenceScorer and dateDifferenceScorer.
  */
-@Component
+@Component(Constant.TRANSACTION_SCORER)
 public class TransactionDifferenceScorer implements IDifferenceScorer<Transaction> {
 
-    private final NumberDifferenceScorer numberDifferenceScorer;
-    private final StringDifferenceScorer stringDifferenceScorer;
-    private final DateDifferenceScorer dateDifferenceScorer;
+    private final IDifferenceScorer numberDifferenceScorer;
+    private final IDifferenceScorer stringDifferenceScorer;
+    private final IDifferenceScorer dateDifferenceScorer;
 
-    public TransactionDifferenceScorer(NumberDifferenceScorer numberDifferenceScorer,
-                                       StringDifferenceScorer stringDifferenceScorer,
-                                       DateDifferenceScorer dateDifferenceScorer) {
+    public TransactionDifferenceScorer(@Qualifier(Constant.NUMBER_SCORER) IDifferenceScorer numberDifferenceScorer,
+                                       @Qualifier(Constant.STRING_SCORER)IDifferenceScorer stringDifferenceScorer,
+                                       @Qualifier(Constant.DATE_SCORER) IDifferenceScorer dateDifferenceScorer) {
         this.numberDifferenceScorer = numberDifferenceScorer;
         this.stringDifferenceScorer = stringDifferenceScorer;
         this.dateDifferenceScorer = dateDifferenceScorer;
     }
-
 
     /**
      * {@inheritDoc}
@@ -37,18 +41,18 @@ public class TransactionDifferenceScorer implements IDifferenceScorer<Transactio
      * If any of the field difference is less than 0 (interpreted as no match) it returns -1 (meaning no match).
      */
     @Override
-    public Double getScore(Threshold threshold, Transaction source, Transaction destination) {
+    public Double getScore(InputData inputData, Transaction source, Transaction destination) {
         double aggregateScore = 
-            stringDifferenceScorer.getScore(threshold, source.getGstin(), destination.getGstin())
-            + dateDifferenceScorer.getScore(threshold, source.getDate(), destination.getDate())
-            + stringDifferenceScorer.getScore(threshold, source.getBillNo(), destination.getBillNo())
-            + numberDifferenceScorer.getScore(threshold, source.getGstRate(), destination.getGstRate())
-            + numberDifferenceScorer.getScore(threshold, source.getTaxableValue(), destination.getTaxableValue())
-            + numberDifferenceScorer.getScore(threshold, source.getIgst(), destination.getIgst())
-            + numberDifferenceScorer.getScore(threshold, source.getCgst(), destination.getCgst())
-            + numberDifferenceScorer.getScore(threshold, source.getSgst(), destination.getSgst())
-            + numberDifferenceScorer.getScore(threshold, source.getTotal(), destination.getTotal());
-        return aggregateScore/9;
+            stringDifferenceScorer.getScore(inputData, source.getGstin(), destination.getGstin())
+            + dateDifferenceScorer.getScore(inputData, source.getDate(), destination.getDate())
+            + stringDifferenceScorer.getScore(inputData, source.getBillNo(), destination.getBillNo())
+            + numberDifferenceScorer.getScore(inputData, source.getGstRate(), destination.getGstRate())
+            + numberDifferenceScorer.getScore(inputData, source.getTaxableValue(), destination.getTaxableValue())
+            + numberDifferenceScorer.getScore(inputData, source.getIgst(), destination.getIgst())
+            + numberDifferenceScorer.getScore(inputData, source.getCgst(), destination.getCgst())
+            + numberDifferenceScorer.getScore(inputData, source.getSgst(), destination.getSgst())
+            + numberDifferenceScorer.getScore(inputData, source.getTotal(), destination.getTotal());
+        return aggregateScore/inputData.getNoOfColumns();
     }
 
 }

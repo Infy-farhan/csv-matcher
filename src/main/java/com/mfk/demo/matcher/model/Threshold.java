@@ -5,9 +5,9 @@ import lombok.Getter;
 @Getter
 public class Threshold {
 
-    private long stringThreshold;
-    private long dateThreshold;
-    private double numberThreshold;
+    private final long stringThreshold;
+    private final long dateThreshold;
+    private final double numberThreshold;
 
     public Threshold() {
         this.stringThreshold = 0;

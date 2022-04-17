@@ -1,12 +1,14 @@
 package com.mfk.demo.matcher.scorer;
 
+import com.mfk.demo.matcher.constant.Constant;
+import com.mfk.demo.matcher.input.InputData;
 import com.mfk.demo.matcher.model.Threshold;
 import org.springframework.stereotype.Component;
 
 /**
  * Simple String Similarity Calculator based on subsequence check
  */
-@Component
+@Component(Constant.STRING_SCORER)
 public class StringDifferenceScorer implements IDifferenceScorer<String> {
 
     /**
@@ -21,9 +23,9 @@ public class StringDifferenceScorer implements IDifferenceScorer<String> {
      * @return difference score of the two strings
      */
     @Override
-    public Double getScore(Threshold threshold, String source, String destination) {
+    public Double getScore(InputData inputData, String source, String destination) {
         int diff = editDistance(source, destination);
-        return diff>threshold.getStringThreshold()? 10.0 : (double)diff/threshold.getStringThreshold();
+        return diff>inputData.getThreshold().getStringThreshold()? inputData.getNoOfColumns() + 1.0 : (double)diff/inputData.getThreshold().getStringThreshold();
     }
 
     private int editDistance(String source, String destination) {

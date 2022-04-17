@@ -1,5 +1,6 @@
 package com.mfk.demo.matcher.matcher;
 
+import com.mfk.demo.matcher.input.InputData;
 import com.mfk.demo.matcher.model.Threshold;
 import com.mfk.demo.matcher.model.Transaction;
 
@@ -13,5 +14,5 @@ public interface IMatcher {
      * @param supplier list of Trasactions in suppliers csv
      * @return result of the comparision in for of a list of Match ojects
      */
-    List<Match> match(Threshold threshold, List<Transaction> buyers, List<Transaction> supplier);
+    List<Match> match(InputData inputData, List<Transaction> buyers, List<Transaction> supplier);
 }

@@ -1,5 +1,6 @@
 package com.mfk.demo.matcher.scorer;
 
+import com.mfk.demo.matcher.input.InputData;
 import com.mfk.demo.matcher.model.Threshold;
 
 /**
@@ -15,5 +16,5 @@ public interface IDifferenceScorer<T> {
      * @param destination second Transaction object
      * @return  float representing the difference score of the provided two transaction objects.
      */
-    public Double getScore(Threshold threshold,T source, T destination);
+    public Double getScore(InputData inputData, T source, T destination);
 }

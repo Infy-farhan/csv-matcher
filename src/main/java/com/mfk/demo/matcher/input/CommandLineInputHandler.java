@@ -22,6 +22,9 @@ public class CommandLineInputHandler implements IInputHandler {
             String supplierPath = in.nextLine();
             System.out.print("Enter output result path: ");
             String resultPath = in.nextLine();
+            System.out.println("Enter no of columns: ");
+            int noOfColumns = Integer.parseInt(in.nextLine());
+
             Float numberThreshold;
             Integer stringThreshold, dateThreshold;
 
@@ -33,7 +36,7 @@ public class CommandLineInputHandler implements IInputHandler {
             stringThreshold = Integer.parseInt(in.nextLine());
 
             Threshold threshold = new Threshold(stringThreshold,dateThreshold,numberThreshold);
-            return new InputData(buyerPath, supplierPath, resultPath, threshold);
+            return new InputData(buyerPath, supplierPath, resultPath, noOfColumns, threshold);
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
