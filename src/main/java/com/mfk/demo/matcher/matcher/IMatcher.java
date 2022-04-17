@@ -6,13 +6,24 @@ import com.mfk.demo.matcher.model.Transaction;
 
 import java.util.List;
 
+/**
+ * Contract to defined matching algorithm to match rows from
+ * buyer csv to rows in seller csv.
+ */
 public interface IMatcher {
+
     /**
-     * Returns a list of Match objects represnting the matching result of the lists of buyes and suppliers
+     * Find matches of {@link Transaction} from list of buyer
+     * to list of seller.
      *
-     * @param buyers   list of Transactions in buyers csv
-     * @param supplier list of Trasactions in suppliers csv
-     * @return result of the comparision in for of a list of Match ojects
+     * Returns {@link Match} which contains details on which
+     * transaction  from buyer matched to which transaction
+     * in seller and type of match.
+     *
+     * @param inputData
+     * @param buyers
+     * @param supplier
+     * @return
      */
     List<Match> match(InputData inputData, List<Transaction> buyers, List<Transaction> supplier);
 }

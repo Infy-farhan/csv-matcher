@@ -16,6 +16,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+/**
+ * Concrete implementation if Matching algorithm to match
+ * row from buyer csv to seller csv.
+ *
+ * This matching algorithm makes use of sorted difference
+ * score. And matches the rows with least score first.
+ *
+ */
 @Component
 public class MinAggregateScoreMatcher implements IMatcher {
 
@@ -26,11 +34,6 @@ public class MinAggregateScoreMatcher implements IMatcher {
         this.transactionDifferenceScorer = transactionDifferenceScorer;
     }
 
-    /**
-     * {@inheritDoc}
-     * Compares the lists by matching each buyer Transaction with all the suppliers
-     * Transactiona nd finding the closest match for it.
-     */
     @Override
     public List<Match> match(InputData inputData, List<Transaction> buyers, List<Transaction> suppliers) {
 

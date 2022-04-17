@@ -9,19 +9,13 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 /**
- * Simple Date Similarity Calculator based on the difference in number of days
+ * Class provides concrete algorithm for calculating difference
+ * score of two Date objects.
  */
 @Component(Constant.DATE_SCORER)
 public class DateDifferenceScorer implements IDifferenceScorer<LocalDate> {
 
-    /**
-     * Returns the differnce score of two LocalDate objects.
-     * The difference score is the number of days between the two dates
-     *
-     * @param source
-     * @param destination
-     * @return The difference score of the two localdate
-     */
+
     @Override
     public Double getScore(InputData inputData, LocalDate source, LocalDate destination) {
         if (source == null && destination == null) {
