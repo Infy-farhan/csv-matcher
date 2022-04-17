@@ -1,4 +1,4 @@
-package demo.matcher.csvmatcher.io;
+package demo.matcher.csvmatcher.writer;
 
 import java.io.IOException;
 import java.io.FileWriter;

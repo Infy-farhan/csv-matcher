@@ -7,28 +7,31 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import demo.matcher.csvmatcher.io.IFileReader;
-import demo.matcher.csvmatcher.io.IFileWriter;
-import demo.matcher.csvmatcher.io.IInputScanner;
-import demo.matcher.csvmatcher.io.InputData;
 import demo.matcher.csvmatcher.matcher.DifferenceFinder;
 import demo.matcher.csvmatcher.matcher.DifferenceFinderByType;
 import demo.matcher.csvmatcher.matcher.Match;
 import demo.matcher.csvmatcher.matcher.Matcher;
 import demo.matcher.csvmatcher.matcher.SimilarityMatcher;
 import demo.matcher.csvmatcher.model.Transaction;
+import demo.matcher.csvmatcher.reader.IFileReader;
+import demo.matcher.csvmatcher.scanner.IInputScanner;
+import demo.matcher.csvmatcher.scanner.InputData;
 import demo.matcher.csvmatcher.similaritycalculator.DateSimilarityCalculator;
 import demo.matcher.csvmatcher.similaritycalculator.NumberSimilarityCalculator;
 import demo.matcher.csvmatcher.similaritycalculator.StringSimilarityCalculator;
+import demo.matcher.csvmatcher.writer.IFileWriter;
 
 @SpringBootApplication
 public class CsvMatcherApplication implements CommandLineRunner {
-	@Autowired
 	IInputScanner inputScanner;
-	@Autowired
 	IFileReader fileReader;
-	@Autowired
 	IFileWriter fileWriter;
+
+	public CsvMatcherApplication(IInputScanner inputScanner, IFileReader fileReader, IFileWriter fileWriter){
+		this.fileReader = fileReader;
+		this.fileWriter = fileWriter;
+		this.inputScanner = inputScanner;
+	}
 	public static void main(String[] args) {
 		SpringApplication.run(CsvMatcherApplication.class, args);
 	}
