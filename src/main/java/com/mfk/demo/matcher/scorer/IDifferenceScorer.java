@@ -1,7 +1,6 @@
 package com.mfk.demo.matcher.scorer;
 
 import com.mfk.demo.matcher.input.InputData;
-import com.mfk.demo.matcher.model.Threshold;
 
 /**
  * Contract defining interface for difference scoring algorithms.

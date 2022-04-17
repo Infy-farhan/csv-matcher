@@ -1,7 +1,6 @@
 package com.mfk.demo.matcher.matcher;
 
 import com.mfk.demo.matcher.input.InputData;
-import com.mfk.demo.matcher.model.Threshold;
 import com.mfk.demo.matcher.model.Transaction;
 
 import java.util.List;

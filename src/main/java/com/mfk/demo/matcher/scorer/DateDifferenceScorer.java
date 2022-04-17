@@ -2,7 +2,6 @@ package com.mfk.demo.matcher.scorer;
 
 import com.mfk.demo.matcher.constant.Constant;
 import com.mfk.demo.matcher.input.InputData;
-import com.mfk.demo.matcher.model.Threshold;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;

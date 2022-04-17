@@ -2,12 +2,11 @@ package com.mfk.demo.matcher.scorer;
 
 import com.mfk.demo.matcher.constant.Constant;
 import com.mfk.demo.matcher.input.InputData;
-import com.mfk.demo.matcher.model.Threshold;
 import com.mfk.demo.matcher.model.Transaction;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.ConcurrentSkipListMap;
+import java.time.LocalDate;
 
 /**
  * Class provides concrete algorithm for calculating difference
@@ -16,13 +15,13 @@ import java.util.concurrent.ConcurrentSkipListMap;
 @Component(Constant.TRANSACTION_SCORER)
 public class TransactionDifferenceScorer implements IDifferenceScorer<Transaction> {
 
-    private final IDifferenceScorer numberDifferenceScorer;
-    private final IDifferenceScorer stringDifferenceScorer;
-    private final IDifferenceScorer dateDifferenceScorer;
+    private final IDifferenceScorer<Number> numberDifferenceScorer;
+    private final IDifferenceScorer<String> stringDifferenceScorer;
+    private final IDifferenceScorer<LocalDate> dateDifferenceScorer;
 
-    public TransactionDifferenceScorer(@Qualifier(Constant.NUMBER_SCORER) IDifferenceScorer numberDifferenceScorer,
-                                       @Qualifier(Constant.STRING_SCORER)IDifferenceScorer stringDifferenceScorer,
-                                       @Qualifier(Constant.DATE_SCORER) IDifferenceScorer dateDifferenceScorer) {
+    public TransactionDifferenceScorer(@Qualifier(Constant.NUMBER_SCORER) IDifferenceScorer<Number> numberDifferenceScorer,
+                                       @Qualifier(Constant.STRING_SCORER)IDifferenceScorer<String> stringDifferenceScorer,
+                                       @Qualifier(Constant.DATE_SCORER) IDifferenceScorer<LocalDate> dateDifferenceScorer) {
         this.numberDifferenceScorer = numberDifferenceScorer;
         this.stringDifferenceScorer = stringDifferenceScorer;
         this.dateDifferenceScorer = dateDifferenceScorer;

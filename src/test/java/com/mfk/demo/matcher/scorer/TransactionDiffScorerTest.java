@@ -1,5 +1,7 @@
 package com.mfk.demo.matcher.scorer;
 
+import java.time.LocalDate;
+
 import com.mfk.demo.matcher.input.InputData;
 import com.mfk.demo.matcher.model.Transaction;
 import org.junit.jupiter.api.Assertions;
@@ -17,13 +19,13 @@ public class TransactionDiffScorerTest {
     private TransactionDifferenceScorer transactionDifferenceScorer;
 
     @Mock
-    private IDifferenceScorer numberDifferenceScorer;
+    private IDifferenceScorer<Number> numberDifferenceScorer;
 
     @Mock
-    private IDifferenceScorer dateDifferenceScorer;
+    private IDifferenceScorer<LocalDate> dateDifferenceScorer;
 
     @Mock
-    private IDifferenceScorer stringDifferenceScorer;
+    private IDifferenceScorer<String> stringDifferenceScorer;
 
     @Mock
     private InputData inputData;
@@ -33,7 +35,7 @@ public class TransactionDiffScorerTest {
 
     @BeforeEach
     public void init() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test

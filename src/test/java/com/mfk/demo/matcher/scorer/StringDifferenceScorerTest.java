@@ -10,7 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnit;
 
 public class StringDifferenceScorerTest {
     @InjectMocks
@@ -24,7 +23,7 @@ public class StringDifferenceScorerTest {
 
     @BeforeEach
     public void init(){
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
     @Test
     public void testValidateGetScoreReturnsZero(){

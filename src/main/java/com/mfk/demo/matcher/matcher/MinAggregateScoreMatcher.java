@@ -2,10 +2,8 @@ package com.mfk.demo.matcher.matcher;
 
 import com.mfk.demo.matcher.constant.Constant;
 import com.mfk.demo.matcher.input.InputData;
-import com.mfk.demo.matcher.model.Threshold;
 import com.mfk.demo.matcher.model.Transaction;
 import com.mfk.demo.matcher.scorer.IDifferenceScorer;
-import com.mfk.demo.matcher.scorer.TransactionDifferenceScorer;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -27,10 +25,10 @@ import java.util.TreeSet;
 @Component
 public class MinAggregateScoreMatcher implements IMatcher {
 
-    private final IDifferenceScorer transactionDifferenceScorer;
+    private final IDifferenceScorer<Transaction> transactionDifferenceScorer;
 
     public MinAggregateScoreMatcher(
-            @Qualifier(Constant.TRANSACTION_SCORER) IDifferenceScorer transactionDifferenceScorer) {
+            @Qualifier(Constant.TRANSACTION_SCORER) IDifferenceScorer<Transaction> transactionDifferenceScorer) {
         this.transactionDifferenceScorer = transactionDifferenceScorer;
     }
 
